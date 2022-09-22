@@ -3,4 +3,3 @@ set -eux
 pwd
 git clone https://github.com/FDio/vpp
 cd vpp
-make test
