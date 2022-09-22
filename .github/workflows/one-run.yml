@@ -1,6 +1,8 @@
+name: Run the job
+
 on:
-  schedule:
-  - cron:  '15 1 * * *'
+  # schedule:
+  # - cron:  '15 1 * * *'
   push:
   workflow_dispatch:
     inputs:
