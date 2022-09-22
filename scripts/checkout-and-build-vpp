@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eux
+pwd
+git clone https://github.com/FDio/vpp
+cd vpp
+UNATTENDED=y make install-dep install-ext-deps
+make build-release
+make test
