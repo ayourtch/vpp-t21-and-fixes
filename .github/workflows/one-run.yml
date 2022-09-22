@@ -1,12 +1,9 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
 on:
   schedule:
   - cron:  '15 1 * * *'
-  - push
+  push:
   workflow_dispatch:
     inputs:
       logLevel:
