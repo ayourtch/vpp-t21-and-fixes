@@ -3,3 +3,23 @@ set -eux
 pwd
 git clone https://github.com/FDio/vpp
 cd vpp
+
+export TRAIL_DAYS=-21
+export VPP_BRANCH=master
+export VPP_CHECKOUT_DATE="$(date +"\"%Y-%m-%d 00:00:00\"" -d "${TRAIL_DAYS} days")"
+export TRAILING_REV=$(git rev-list -n 1 --first-parent --before="${VPP_CHECKOUT_DATE}" "${VPP_BRANCH}")
+export CHERRYPICKS_DONE=${TRAILING_REV}
+
+ALL_FIXES=$(git log ${TRAILING_REV}..HEAD --pretty=oneline --grep 'Type: fix' | cut -c 1-40)
+echo $(git log ${TRAILING_REV}..HEAD --pretty=oneline --grep 'Type: fix')
+git checkout ${TRAILING_REV}
+
+for cid in ${ALL_FIXES}; do
+	git fetch origin "${cid}"
+	if git cherry-pick --rerere-autoupdate FETCH_HEAD
+	then
+		CHERRYPICKS_DONE="${CHERRYPICKS_DONE} ${cid}"
+	else
+		echo "Can not cherry-pick ${cid}"
+	fi
+done
