@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eux
+pwd
+cd vpp
+UNATTENDED=y make install-dep install-ext-deps
+make build-release
