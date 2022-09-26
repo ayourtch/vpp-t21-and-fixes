@@ -3,6 +3,8 @@ set -eux
 pwd
 git clone https://github.com/FDio/vpp
 cd vpp
+git config --global user.email "ayourtch@gmail.com"
+git config --global user.name "Auto-cherry-picker"
 
 export TRAIL_DAYS=-21
 export VPP_BRANCH=master
